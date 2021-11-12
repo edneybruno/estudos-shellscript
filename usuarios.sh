@@ -6,14 +6,16 @@
 # Obs.: Lê dados do arquivo /etc/passwd
 #
 # Edney, Novembro de 2021
-VERSAO=4
+VERSAO=5
 ORDENAR=0
 LISTA=$(cut -d : -f 1,5 /etc/passwd)
 MENSAGEM_USO="
 Uso: $(basename "$0") [-h | -V]
     -h, --help      Mostra esta tela de ajuda e sai
     -V, --version   Mostra a versão do programa e sai
-    -s, --sort      Ordena a lista de usuarios
+    -s, --sort      Ordena a lista de usuarios alfabeticamente
+    --reverse       Inverte a ordem da lista
+    --uppercase     Coloca a lista em caixa alta
 "
 
 # Tratamento das opções de linha de comando

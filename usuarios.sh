@@ -10,15 +10,15 @@ VERSAO=5
 ORDENAR=0
 INVERTER=0
 MAIUSCULAS=0
-LISTA=$(cut -d : -f 1,5 /etc/passwd)
 MENSAGEM_USO="
 Uso: $(basename "$0") [OPÇÕES]
     OPÇÕES:
-        -h, --help      Mostra esta tela de ajuda e sai
-        -V, --version   Mostra a versão do programa e sai
-        -s, --sort      Ordena a lista de usuarios alfabeticamente
-        --reverse       Inverte a ordem da lista
-        --uppercase     Coloca a lista em caixa alta
+        -h, --help      	Mostra esta tela de ajuda e sai
+        -V, --version   	Mostra a versão do programa e sai
+        -s, --sort		    Ordena a lista de usuarios alfabeticamente
+        -r, --reverse       Inverte a ordem da lista
+        -u, --uppercase     Coloca a lista em caixa alta
+	       -d, --delimiter	Insere um separados nos campos
 "
 
 # Tratamento das opções de linha de comando
@@ -32,6 +32,14 @@ while [ -n $1 ]; do
             ;;
         -u | --uppercase)
             MAIUSCULAS=1
+            ;;
+    	-d | --delimiter)
+            shift
+            delim="$1"
+            if [ -z "$1" ]; then
+                echo "Faltou o argumento."
+                exit 1
+            fi
             ;;
         -h | --help)
             echo "$MENSAGEM_USO"
@@ -53,6 +61,7 @@ while [ -n $1 ]; do
 done
 
 # Processamento
+LISTA=$(cut -d : -f 1,5 /etc/passwd)
 if [ "$ORDENAR" -eq 1 ]; then
     LISTA=$(echo "$LISTA" | sort)
 elif [ "$INVERTER -eq 1" ]; then
